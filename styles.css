@@ -1,0 +1,27 @@
+:root {
+    --font: "FOT";
+    --banner: darkgray
+}
+
+body {
+    color: black;
+    background: white
+}
+
+header {
+    height: 80px
+}
+
+.button {
+    background-color: darkgray;
+    width:70px
+}
+
+.chars {
+    flex-wrap: wrap;
+    overflow-x: auto
+}
+
+.active {
+    border: 4px solid black
+}
