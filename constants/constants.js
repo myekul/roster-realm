@@ -1,6 +1,5 @@
-const API_KEY = 'AIzaSyBFOYjIw9IrbPirN1ov4zkVBTFOOCX1l8w'
 // const smashGames = ['64', 'Melee', 'Brawl', '4', 'Ultimate', 'Custom']
-const smashGames = ['64', 'Melee', 'Brawl', '4', 'Ultimate']
+const smashGames = ['s1', 's2', 's3', 's4', 's5']
 const smashMap = {
     s1: '64',
     s2: 'Melee',

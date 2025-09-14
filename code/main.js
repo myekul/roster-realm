@@ -1,78 +1,39 @@
-generateHTML()
-gapi.load("client", loadClient);
+gapi.load('client', () => loadClient(true));
+initializeHash('home')
+setFooter('2025')
+setSidebar(generateSidebar())
+    .then(() => {
+        changeGame('s5', true)
+    })
+setTabs(['home', 'list', null, 'ballpit'])
+// setTabs(['home', 'list', null, 'random', 'ballpit'])
 function action() {
-    globalSmash = document.getElementById('dropdown_game').value
     const omit = document.getElementById('checkbox_omit').checked
-    if (globalSmash != 's6') {
-        characters = allCharacters.filter(char => char[globalSmash])
+    if (globalGame != 's6') {
+        characters = allCharacters.filter(char => char[globalGame])
     }
     if (omit) {
         characters = characters.filter(char => !char.omit)
     }
-    switch (page) {
-        case 'roster':
-            generateRoster()
+    switch (globalTab) {
+        case 'home':
+            generateHome()
             break
         case 'list':
             generateList()
             break
+        case 'random':
+            generateRandom()
+            break
+        case 'ballpit':
+            generateBallpit()
+            break
     }
-}
-function generateHTML() {
-    let HTMLContent = ''
-    smashGames.forEach((game, index) => {
-        HTMLContent += `<option value="s${index + 1}" ${game == globalSmash ? 'selected' : ''}>${game}</option>`
-    })
-    document.getElementById('dropdown_game').innerHTML = HTMLContent
-}
-function generateRoster() {
-    const bySmash = document.getElementById('checkbox_bySmash').checked
-    let HTMLContent = `<div>`
-    if (bySmash) {
-        smashGames.forEach(smash => {
-            HTMLContent += `<div class='container'><img src='images/smash/${smash}.png' style='width:200px'></div>`
-            HTMLContent += `<div class='container chars' style='padding-bottom:30px'>`
-            characters.forEach(char => {
-                if (char.smash == smash) {
-                    HTMLContent += populateGrid(char)
-                }
-            })
-            HTMLContent += `</div>`
-        })
-    } else {
-        HTMLContent += `<div class='container chars'>`
-        characters.forEach(char => {
-            HTMLContent += populateGrid(char)
-        })
-        HTMLContent += `</div>`
-    }
-    HTMLContent += `</div>`
-    document.getElementById('content').innerHTML = HTMLContent
-}
-function generateList() {
-    let HTMLContent = `<div class='container'><table>`
-    characters.forEach(char => {
-        HTMLContent += `<tr>`
-        HTMLContent += `<td>${charImage(char)}</td>`
-        HTMLContent += `<td>${char.name}</td>`
-        HTMLContent += `</tr>`
-    })
-    HTMLContent += `</table></div>`
-    document.getElementById('content').innerHTML = HTMLContent
-}
-function populateGrid(char) {
-    let HTMLContent = ''
-    // if (!omit && char.omit || omit && !char.omit) {
-    const series = document.getElementById('checkbox_series').checked
-    HTMLContent += charImage(char)
-    HTMLContent += series ? `<img src='images/series/${char.new ? 'custom/' : ''}${char.origin?.series}.png' style='width:80px;height:auto;background-color:${char[getColor()]}'>` : ''
-    // }
-    return HTMLContent
 }
 function getColor() {
-    return globalSmash == 's4' ? 'color4' : 'coloru'
+    return globalGame == 's4' ? 'color4' : 'coloru'
 }
-function charImage(char) {
+function charImage(char, info) {
     let charID = char.id
     if (charID < 10) {
         charID = '0' + char.id
@@ -80,12 +41,26 @@ function charImage(char) {
     if (char.e) {
         charID += 'e'
     }
-    const smash = char.smash == 'Custom' ? 'Custom' : 'Ultimate'
-    return `<img src='images/characters/${smash}/${charID}.png' style='width:80px;height:auto;background-color:${char[getColor()]}'>`
+    const smash = char.smash == 'Custom' ? 'Custom' : 's5'
+    const onclick = info ? `onclick="openModalRR('${char.index}')"` : ''
+    return `<img src='images/characters/${smash}/${charID}.png' class='${info ? 'grow' : ''}' style='width:80px;height:auto;background-color:${char[getColor()]}' ${onclick}>`
 }
-function showTab(tab) {
-    page = tab
-    buttonClick(page + 'Tab', 'tabs', 'active')
-    action()
+function openModalRR(charIndex) {
+    const char = allCharacters[charIndex]
+    let HTMLContent = ''
+    HTMLContent += `<div class='container'>${charImage(char)}</div>
+    <div class='container font2' >${char.name}</div>`
+    openModal(HTMLContent, 'INFO')
 }
-setFooter('2025')
+function generateSidebar() {
+    let HTMLContent = ''
+    smashGames.forEach(game => {
+        HTMLContent += `<div class="container grow background2" style='width:100%' onclick="changeGame('${game}')"><img src="images/logo/${game}.png"></div>`
+    })
+    return HTMLContent
+}
+function changeGame(game, stop) {
+    globalGame = game
+    document.getElementById('sidebarLogo').src = `images/logo/${globalGame}.png`
+    if (!stop) action()
+}

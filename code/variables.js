@@ -1,4 +1,6 @@
 let allCharacters
-let globalSmash = 'Ultimate'
+let globalGame
 let render = 'Ultimate'
-let page = 'roster'
+
+let sheetId = '15kyyRcvTa8Yy3DQ_fQhTU8vJK-Vidro48iGxnT8Yz-M'
+let range = 'Main!A:Z'

@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 
 <head>
-    <link rel="stylesheet" href="https://myekul.github.io/shared-assets/styles.css">
+    <link rel="stylesheet" href="https://myekul.github.io/shared-assets/styles/styles.css">
     <link rel="stylesheet" href="https://myekul.github.io/shared-assets/myekul/myekul.css">
     <link rel="stylesheet" href="styles.css">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-    <link id='favicon' rel="shortcut icon" href='images/smash.png'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link id='favicon' rel="shortcut icon" href='images/favicon.png'>
     <title>Roster Realm</title>
     <script src="https://myekul.github.io/shared-assets/utils.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
     <!-- <script src="https://www.gstatic.com/charts/loader.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://myekul.github.io/shared-assets/ballpit.js"></script>
 </head>
 
 <body>
     <div id="bodyContent">
         <header>
             <div class="container" style="gap:10px;padding-top:5px">
-                <img src="images/smash.png" style="height:40px">
-                <div style="font-size:200%;font-weight:bold">Roster Realm</div>
+                <img src="images/favicon.png" style="height:50px">
+                <div class='font2' style="font-size:200%;font-weight:bold">Roster Realm</div>
             </div>
         </header>
         <main>
-            <div id="tabs" class="container">
-                <div id='rosterTab' class="button" onclick="showTab('roster')">Roster</div>
-                <div id='listTab' class="button" onclick="showTab('list')">List</div>
-            </div>
-            <div id="gameDropdown" class="container">
-                Game<select id="dropdown_game" onchange="action()"></select>
-                <!-- Render<select id="dropdown_render" onchange="action()"></select> -->
-            </div>
-            <div class="container">
-                <input id='checkbox_series' type="checkbox" onchange="action()">Series
-                <input id='checkbox_bySmash' type="checkbox" onchange="action()">By Smash
-                <input id='checkbox_omit' type="checkbox" onchange="action()">Omit
+            <div class="sticky">
+                <div id='headerRow' class="container" style="gap:10px">
+                    <div id="sidebarDiv"></div>
+                    <div id="gameDropdown">
+                        <!-- Render<select id="dropdown_render" onchange="action()"></select> -->
+                    </div>
+                    <input id='checkbox_series' type="checkbox" onchange="action()">Series
+                    <input id='checkbox_bySmash' type="checkbox" onchange="action()">By Smash
+                    <input id='checkbox_omit' type="checkbox" onchange="action()">Omit
+                </div>
+                <div id="progress"></div>
+                <div id="tabsDiv"></div>
             </div>
             <div id="content"></div>
         </main>
@@ -46,6 +48,10 @@
 
 <script src="code/general.js"></script>
 <script src="code/fetch.js"></script>
+
+<script src="code/tabs/tabs.js"></script>
+<script src="code/tabs/random.js"></script>
+
 <script src="code/main.js"></script>
 
 </html>
