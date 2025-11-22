@@ -1,6 +1,6 @@
 gapi.load('client', () => loadClient(true));
 initializeHash('home')
-setFooter('2025')
+setFooter(2025)
 setSidebar(generateSidebar())
     .then(() => {
         changeGame('s5', true)
